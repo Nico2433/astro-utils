@@ -1,0 +1,38 @@
+{
+  "name": "@nico2433/astro-utils",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": "./src/components/index.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "astro-components"
+  ],
+  "scripts": {
+    "dev": "astro dev",
+    "build": "pnpm lint && astro check && astro build",
+    "start": "astro preview",
+    "lint": "eslint --ext .js,.ts,.astro,.mjs,.cjs  .",
+    "lint:fix": "eslint --ext .js,.ts,.astro,.mjs,.cjs . --fix"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.6.0",
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0",
+    "astro": "^4.8.3",
+    "astro-eslint-parser": "^1.0.2",
+    "eslint": "^9.2.0",
+    "eslint-plugin-astro": "^0.23.0",
+    "eslint-plugin-tailwindcss": "^3.15.1",
+    "typescript": "^5.4.5",
+    "@astrojs/tailwind": "^5.1.0",
+    "tailwindcss": "^3.4.3"
+  },
+  "peerDependencies": {
+    "astro": "^4.0.0"
+  },
+  "dependencies": {}
+}
