@@ -7,8 +7,6 @@ interface Props extends HTMLAttributes<"div"> {
 }
 
 const { limits = "full", class: className, ...attrs } = Astro.props;
-
-const slotClasses = "container";
 ---
 
 <div
@@ -19,11 +17,5 @@ const slotClasses = "container";
   ]}
   {...attrs}
 >
-  <slot class={slotClasses} />
+  <slot />
 </div>
-
-<style>
-  div :global(*) {
-    @apply container;
-  }
-</style>

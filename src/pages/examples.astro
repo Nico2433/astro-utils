@@ -1,0 +1,33 @@
+---
+import { AsDropdown } from "@/components/client";
+import { AsDocDelimiter } from "@/components/general";
+---
+
+<AsDocDelimiter class="w-screen h-screen justify-center">
+  <div class="container flex justify-center">
+    <AsDropdown>
+      <button slot="trigger" class="bg-red-500 p-5">Trigger</button>
+      <div class="astro-dropdown-content hidden">test</div>
+    </AsDropdown>
+  </div>
+</AsDocDelimiter>
+
+<script>
+  import { observeAttributes, qsAll } from "@/utils";
+
+  const contents = qsAll(".astro-dropdown-content");
+
+  contents.forEach((content) => {
+    const container = content.parentElement as HTMLDivElement;
+    const classes = content.className.replace("hidden", "").trimEnd();
+
+    const changeVisibility = () => {
+      const isOpen = container.dataset.isopen === "true";
+      const newClasses = isOpen ? "block" : "hidden";
+
+      content.className = `${classes} ${newClasses}`;
+    };
+
+    observeAttributes(container, ["data-isopen"], changeVisibility);
+  });
+</script>

@@ -1,0 +1,97 @@
+---
+import type { DropdownComponent } from "@/@types";
+
+interface Props extends DropdownComponent {}
+
+const {
+  position = "bottom",
+  absolute = true,
+  autoClose = true,
+  class: className,
+  ...attrs
+} = Astro.props;
+
+// *------- CONTENT STYLES
+const absoluteClass = absolute ? "absolute" : null;
+let top;
+let right;
+let bottom;
+let left;
+
+if (absoluteClass) {
+  const fullPosition = "100%";
+  top = position === "top" ? fullPosition : null;
+  right = position === "right" ? fullPosition : null;
+  bottom = position === "bottom" ? fullPosition : null;
+  left = position === "left" ? fullPosition : null;
+}
+---
+
+<div
+  data-isopen="false"
+  data-autodisabled={!autoClose && "true"}
+  class:list={[
+    "astro-dropdown",
+    "flex items-center relative",
+    position === "bottom" || position === "top"
+      ? position === "bottom"
+        ? "flex-col"
+        : "flex-col-reverse"
+      : position === "right"
+        ? "flex-row"
+        : "flex-row-reverse",
+    className,
+  ]}
+  {...attrs}
+>
+  <slot name="trigger" />
+  <slot />
+</div>
+
+<style define:vars={{ absoluteClass, top, right, bottom, left }}>
+  div :global(.astro-dropdown-content) {
+    position: var(--absoluteClass);
+    top: var(--bottom);
+    right: var(--left);
+    bottom: var(--top);
+    left: var(--right);
+  }
+</style>
+
+<script>
+  import { qsAll } from "@/utils";
+  import { checkClickOutside } from "@/events";
+
+  const dropdowns = qsAll(".astro-dropdown");
+
+  dropdowns.forEach((dropdown) => {
+    const autoDisabled = dropdown.dataset.autodisabled === "true";
+
+    const trigger = dropdown.querySelector<HTMLButtonElement>("button");
+    const content = dropdown.querySelector<HTMLElement>(
+      ".astro-dropdown-content"
+    );
+    if (!trigger || !content)
+      throw new Error(
+        "A trigger <button> and a content with class 'astro-dropdown-content' is needed for dropdown"
+      );
+
+    // *------- SETS TRIGGER EVENT
+    trigger.onclick = () => {
+      const isOpen = dropdown.dataset.isopen === "true";
+      dropdown.dataset.isopen = String(!isOpen);
+    };
+
+    // *------- SETS CLICK EVENT
+    if (!autoDisabled) {
+      const onClickOutside = (ev: MouseEvent) => {
+        const isOpen = dropdown.dataset.isopen === "true";
+        const outside = checkClickOutside(ev, dropdown);
+
+        if (outside && isOpen) dropdown.dataset.isopen = "false";
+      };
+
+      document.addEventListener("click", onClickOutside);
+    }
+  });
+</script>

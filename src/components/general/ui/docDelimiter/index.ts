@@ -1,1 +1,1 @@
-export { default as DocDelimiter } from "./DocDelimiter.astro";
+export { default as AsDocDelimiter } from "./DocDelimiter.astro";
