@@ -1,0 +1,78 @@
+---
+import type { DropdownMenuComponent } from "@/lib/@types";
+
+interface Props extends DropdownMenuComponent {}
+
+const {
+  autoClose = true,
+  blockScroll = true,
+  class: className,
+  ...attrs
+} = Astro.props;
+---
+
+<div
+  data-isopen="false"
+  data-autodisabled={!autoClose && "true"}
+  data-blockdisabled={!blockScroll && "true"}
+  class:list={["astro-menu", className]}
+  {...attrs}
+>
+  <slot name="trigger" />
+  <slot />
+</div>
+
+<script>
+  import { observeAttributes, qsAll } from "@/lib/utils";
+  import { checkClickOutside } from "@/lib/events";
+
+  const menus = qsAll(".astro-menu");
+
+  menus.forEach((menu) => {
+    const autoDisabled = menu.dataset.autodisabled === "true";
+    const blockDisabled = menu.dataset.blockdisabled === "true";
+
+    const trigger = menu.querySelector<HTMLButtonElement>("button");
+    const content = menu.querySelector<HTMLElement>(".astro-menu-content");
+    if (!trigger || !content)
+      throw new Error(
+        "A trigger <button> and a content with class 'astro-menu-content' is needed for menu"
+      );
+    const closeBtn = content.querySelector<HTMLButtonElement>("button");
+
+    const setClose = () => {
+      const isOpen = menu.dataset.isopen === "true";
+      menu.dataset.isopen = String(!isOpen);
+    };
+
+    // *------- SETS TRIGGER EVENT
+    trigger.onclick = setClose;
+
+    // *------- SETS CLOSE BTN EVENT
+    if (closeBtn) closeBtn.onclick = setClose;
+
+    // *------- SETS CLICK EVENT
+    if (!autoDisabled) {
+      const onClickOutside = (ev: MouseEvent) => {
+        const isOpen = menu.dataset.isopen === "true";
+        const outside = checkClickOutside(ev, menu);
+
+        if (outside && isOpen) menu.dataset.isopen = "false";
+      };
+
+      document.addEventListener("click", onClickOutside);
+    }
+
+    const blockScroll = () => {
+      const isOpen = menu.dataset.isopen === "true";
+
+      if (isOpen) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
+    };
+
+    if (!blockDisabled) observeAttributes(menu, ["data-isopen"], blockScroll);
+  });
+</script>

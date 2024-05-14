@@ -1,0 +1,40 @@
+---
+import { AsMenu } from "@/lib/components/client";
+import { AsDocDelimiter } from "@/lib/components/general";
+---
+
+<AsDocDelimiter class="w-screen h-screen justify-center">
+  <div class="container flex justify-center">
+    <AsMenu>
+      <button slot="trigger" class="bg-red-500 p-5">Trigger</button>
+      <div class="astro-menu-content hidden">
+        <div
+          class="flex flex-col items-center gap-5 h-screen absolute right-0 bg-red-200 top-0 p-5"
+        >
+          <button class="bg-blue-500 p-1">Close</button>
+          <div>Content</div>
+        </div>
+      </div>
+    </AsMenu>
+  </div>
+</AsDocDelimiter>
+
+<script>
+  import { observeAttributes, qsAll } from "@/lib/utils";
+
+  const contents = qsAll(".astro-menu-content");
+
+  contents.forEach((content) => {
+    const container = content.parentElement as HTMLDivElement;
+    const classes = content.className.replace("hidden", "").trimEnd();
+
+    const changeVisibility = () => {
+      const isOpen = container.dataset.isopen === "true";
+      const newClasses = isOpen ? "block" : "hidden";
+
+      content.className = `${classes} ${newClasses}`;
+    };
+
+    observeAttributes(container, ["data-isopen"], changeVisibility);
+  });
+</script>
