@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { getDocLimits, type DocDelLimit } from "./limits";
+
+interface Props extends HTMLAttributes<"div"> {
+  limits?: DocDelLimit;
+}
+
+const { limits = "full", class: className, ...attrs } = Astro.props;
+
+const slotClasses = "container";
+---
+
+<div
+  class:list={[
+    "flex flex-col items-center mx-auto w-full",
+    getDocLimits(limits),
+    className,
+  ]}
+  {...attrs}
+>
+  <slot class={slotClasses} />
+</div>
+
+<style>
+  div :global(*) {
+    @apply container;
+  }
+</style>
