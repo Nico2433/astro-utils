@@ -20,6 +20,18 @@
     "start": "astro preview",
     "release": "standard-version && git push --follow-tags && npm publish"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nico2433/astro-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nico2433/astro-utils/issues"
+  },
+  "homepage": "https://github.com/Nico2433/astro-utils#readme",
   "devDependencies": {
     "@astrojs/check": "^0.6.0",
     "@astrojs/tailwind": "^5.1.0",
