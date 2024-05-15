@@ -3,7 +3,7 @@
   "author": "nico2433",
   "license": "MIT",
   "description": "Utils for astro projects",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "files": [
     "lib"
