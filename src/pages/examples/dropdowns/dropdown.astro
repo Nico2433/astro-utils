@@ -1,9 +1,9 @@
 ---
-import { AsDropdown } from "@/lib/components/client";
-import { AsDocDelimiter } from "@/lib/components/general";
+import { AsDropdown } from "lib/components/client";
+import { AsDocDelimiter } from "lib/components/general";
 ---
 
-<AsDocDelimiter class="w-screen h-screen justify-center">
+<AsDocDelimiter class="h-screen justify-center">
   <div class="container flex justify-center">
     <AsDropdown>
       <button slot="trigger" class="bg-red-500 p-5">Trigger</button>
@@ -13,7 +13,7 @@ import { AsDocDelimiter } from "@/lib/components/general";
 </AsDocDelimiter>
 
 <script>
-  import { observeAttributes, qsAll } from "@/lib/utils";
+  import { observeAttributes, qsAll } from "lib/utils";
 
   const contents = qsAll(".astro-dropdown-content");
 

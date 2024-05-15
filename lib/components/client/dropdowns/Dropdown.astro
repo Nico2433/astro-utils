@@ -1,5 +1,5 @@
 ---
-import type { DropdownComponent } from "@/lib/@types";
+import type { DropdownComponent } from "../../../@types";
 
 interface Props extends DropdownComponent {}
 
@@ -59,8 +59,8 @@ if (absoluteClass) {
 </style>
 
 <script>
-  import { qsAll } from "@/lib/utils";
-  import { checkClickOutside } from "@/lib/events";
+  import { qsAll } from "../../../utils";
+  import { checkClickOutside } from "../../../events";
 
   const dropdowns = qsAll(".astro-dropdown");
 

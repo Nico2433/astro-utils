@@ -1,5 +1,5 @@
 ---
-import type { DropdownMenuComponent } from "@/lib/@types";
+import type { DropdownMenuComponent } from "../../../@types";
 
 interface Props extends DropdownMenuComponent {}
 
@@ -23,8 +23,8 @@ const {
 </div>
 
 <script>
-  import { observeAttributes, qsAll } from "@/lib/utils";
-  import { checkClickOutside } from "@/lib/events";
+  import { observeAttributes, qsAll } from "../../../utils";
+  import { checkClickOutside } from "../../../events";
 
   const menus = qsAll(".astro-menu");
 
